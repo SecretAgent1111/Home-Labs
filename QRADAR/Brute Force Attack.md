@@ -5,9 +5,9 @@ In this lab, I used IBM QRadar SIEM to investigate a brute force attack targetin
 The analysis focuses on identifying failed login patterns, correlating events into offenses, and validating the alert as a true positive.
 
 ## **Lab Environment**
-SIEM: IBM QRadar Community Edition
-Log Source: Linux Server
-Attack Type: SSH Brute Force
+SIEM: IBM QRadar Community Edition,
+Log Source: Linux Server,
+Attack Type: SSH Brute Force,
 
 ## **Investigation Workflow**
 
@@ -24,10 +24,10 @@ Analyzed logs to identify suspicious activity patterns:
 
 
 **Key Observations:**
-Multiple failed login attempts
-Same destination IP: 192.168.0.15
-Multiple usernames targeted
-High frequency of attempts
+Multiple failed login attempts,
+Same destination IP: 192.168.0.15,
+Multiple usernames targeted,
+High frequency of attempts,
 
 **Step 3: Offense Correlation**
 QRadar correlated events into a security offense:
@@ -37,21 +37,31 @@ QRadar correlated events into a security offense:
 
 ## **Offense Details:**
 
-Rule: Brute Force Attack
-Multiple login failures detected
-High magnitude score
-Thousands of events generated
+Rule: Brute Force Attack,
+Multiple login failures detected,
+High magnitude score,
+Thousands of events generated.
 
 ## **Detection Logic**
 
 The attack was identified based on:
-Repeated failed login attempts
-Multiple usernames targeted
-Same destination host
-High event volume in a short time
+
+Repeated failed login attempts,
+Multiple usernames targeted,
+Same destination host,
+High event volume in a short time.
 
 ## **MITRE ATT&CK**
 T1110 — Brute Force
+
+## **Why This is Malicious**
+
+Normal users do not generate multiple failed login attempts in seconds.
+Multiple usernames suggest password guessing attempts.
+External IP addresses indicate unauthorized access attempts.
+High event volume confirms automated attack tools.
+
+Therefore, this activity is classified as a **True Positive Brute Force Attack**.
 
 ## **Incident Report**
 
@@ -64,23 +74,32 @@ T1110 — Brute Force
 **Source IPs:** Multiple external IPs
 
 **Reason for True Positive:**
-High volume of failed login attempts
-Multiple usernames targeted
-QRadar offense triggered
-Matches brute force attack behavior
+High volume of failed login attempts,
+Multiple usernames targeted,
+QRadar offense triggered,
+Matches brute force attack behavior.
 
 **Reason for Escalation:**
-Critical service targeted (SSH)
-Risk of unauthorized access
-Persistent attack pattern
+Critical service targeted (SSH),
+Risk of unauthorized access,
+Persistent attack pattern.
 
 **Recommended Actions:**
-Block attacker IPs
-Disable root SSH login
-Enable MFA
+Block attacker IPs,
+Disable root SSH login,
+Enable MFA.
 
 **Indicators of Compromise:**
-Multiple failed SSH logins
-External IP addresses
-High event count
-Target port 22
+Multiple failed SSH logins,
+External IP addresses,
+High event count,
+Target port 22.
+
+## **Analyst Findings**
+
+During the investigation, the following suspicious behavior was identified:
+
+Multiple failed SSH login attempts from external IP addresses.
+Same destination host (`192.168.0.15`) targeted repeatedly.
+Multiple usernames such as `root`, `admin`, and `db` were targeted.
+High frequency of attempts within a short time window. This pattern indicates an automated brute force attack attempting to gain unauthorized access.
