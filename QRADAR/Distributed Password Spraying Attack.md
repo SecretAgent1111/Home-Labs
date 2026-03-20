@@ -32,16 +32,25 @@ Analyzed logs to identify suspicious activity patterns:
 - Multiple usernames targeted (`admin`, `oracle`, `ubuntu`, etc.)  
 - Multiple external source IP addresses  
 - High frequency of login attempts  
-### Offense Details:
 
-Rule: SSH Authentication Failure / Brute Force Detection,
-Multiple login failures detected,
-High magnitude score,
-Large volume of events generated in short time.
+## Offense Details
 
-### Detection Logic
+- **Rule:** SSH Authentication Failure / Brute Force Detection  
+- Multiple login failures detected  
+- High magnitude score  
+- Large volume of events generated in a short time  
 
-The attack was identified based on: Repeated failed login attempts, Multiple usernames targeted, Multiple source IP addresses, Same destination host, High event volume in a short time
+---
+
+## Detection Logic
+
+The attack was identified based on:
+
+- Repeated failed login attempts  
+- Multiple usernames targeted  
+- Multiple source IP addresses  
+- Same destination host  
+- High event volume in a short time  
 
 ## MITRE ATT&CK
 
