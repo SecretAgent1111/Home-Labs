@@ -14,13 +14,13 @@ Attack Type: SSH Brute Force
 **Step 1: Log Analysis**
 Applied filter to identify failed SSH login attempts:
 
-
+![Filter Applied](./images/filter.png)
 
 
 **Step 2: Event Investigation**
 Analyzed logs to identify suspicious activity patterns:
 
-
+![Log Activity](./images/log-activity.png)
 
 
 **Key Observations:**
@@ -32,7 +32,7 @@ High frequency of attempts
 **Step 3: Offense Correlation**
 QRadar correlated events into a security offense:
 
-
+![Offense](./images/offenses.png)
 
 
 ## **Offense Details:**
