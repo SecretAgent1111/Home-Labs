@@ -1,4 +1,4 @@
-**Brute Force Attack Investigation**
+# **Brute Force Attack Investigation**
 
 **Description**- In this lab, I used IBM QRadar SIEM to investigate a brute force attack targeting a Linux server.
 The analysis focuses on identifying failed login patterns, correlating events into offenses, and validating the alert as a true positive.
