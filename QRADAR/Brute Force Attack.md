@@ -41,7 +41,7 @@ Multiple login failures detected
 High magnitude score
 Thousands of events generated
 
-** Detection Logic**
+**Detection Logic**
 
 The attack was identified based on:
 Repeated failed login attempts
