@@ -35,14 +35,14 @@ QRadar correlated events into a security offense:
 
 
 
-**Offense Details:**
+## **Offense Details:**
 
 Rule: Brute Force Attack
 Multiple login failures detected
 High magnitude score
 Thousands of events generated
 
-**Detection Logic**
+## **Detection Logic**
 
 The attack was identified based on:
 Repeated failed login attempts
@@ -50,10 +50,10 @@ Multiple usernames targeted
 Same destination host
 High event volume in a short time
 
-**MITRE ATT&CK**
+## **MITRE ATT&CK**
 T1110 — Brute Force
 
-**Incident Report**
+## **Incident Report**
 
 **Time of Activity:** 20 March 2026 (~02:00 AM – 02:06 AM)
 
