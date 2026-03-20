@@ -16,11 +16,14 @@ Attack Type: Distributed Password Spraying (SSH),
 
 Applied filter to identify failed SSH login attempts:
 
+![Successful Login Filter](./images/Successful%20Login%20Filter.png)
 
 
 ##### Step 2: Event Investigation
 
 Analyzed logs to identify suspicious activity patterns:
+
+![Log Activity](./images/Single.png)
 
 Key Observations: Multiple failed login attempts, Same destination IP: 192.168.0.15, Multiple usernames targeted (admin, oracle, ubuntu, etc.), Multiple external source IP addresses, High frequency of login attempts
 
