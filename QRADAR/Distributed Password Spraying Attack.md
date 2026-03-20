@@ -25,8 +25,13 @@ Analyzed logs to identify suspicious activity patterns:
 
 ![Log Activity](./images/Single.png)
 
-Key Observations: Multiple failed login attempts, Same destination IP: 192.168.0.15, Multiple usernames targeted (admin, oracle, ubuntu, etc.), Multiple external source IP addresses, High frequency of login attempts
+### Key Observations
 
+- Multiple failed login attempts  
+- Same destination IP: **192.168.0.15**  
+- Multiple usernames targeted (`admin`, `oracle`, `ubuntu`, etc.)  
+- Multiple external source IP addresses  
+- High frequency of login attempts  
 ### Offense Details:
 
 Rule: SSH Authentication Failure / Brute Force Detection,
