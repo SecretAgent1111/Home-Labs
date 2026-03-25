@@ -91,8 +91,40 @@ index=main "Failed password"
 - Configure SIEM alerts for threshold breaches
 
 
-## 10. Key Learning
-- Handling unstructured logs in SIEM
-- Regex-based field extraction (rex)
-- Detection engineering fundamentals
-Correlation between raw logs and SIEM output
+## 10. Alert Classification
+
+### True Positive (TP)
+
+**Time of Activity:**  
+25 March 2026 (based on Splunk event timestamps)
+
+**List of Affected Entities:**  
+- Source IP: 192.168.1.229  
+- Destination Host: Ubuntu Server  
+- Service Targeted: SSH (Port 22)  
+- Log Source: /var/log/auth.log  
+
+**Reason for Classifying as True Positive:**  
+- Multiple failed login attempts observed from a single IP address  
+- Activity pattern matches automated brute force behavior  
+- Logs confirm repeated authentication failures within a short timeframe  
+- Attack originated externally (Kali attacker machine)
+
+**Reason for Escalating the Alert:**  
+- Threshold of failed login attempts reached (≥5 attempts)  
+- Potential risk of credential compromise  
+- Brute force attacks are a common initial access technique  
+
+**Recommended Remediation Actions:**  
+- Block attacker IP at firewall level  
+- Enable account lockout policy  
+- Enforce strong password policies  
+- Implement SSH key-based authentication  
+- Deploy Fail2Ban for automated blocking  
+- Monitor authentication logs continuously  
+
+**List of Attack Indicators (IOCs):**  
+- Repeated "Failed password" entries in logs  
+- Source IP: 192.168.1.229  
+- SSH authentication attempts on port 22  
+- High frequency of login failures  
