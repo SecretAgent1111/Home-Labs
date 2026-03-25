@@ -96,7 +96,7 @@ index=main "Failed password"
 ### True Positive (TP)
 
 **Time of Activity:**  
-25 March 2026 (based on Splunk event timestamps)
+25 March 2026 
 
 **List of Affected Entities:**  
 - Source IP: 192.168.1.229  
