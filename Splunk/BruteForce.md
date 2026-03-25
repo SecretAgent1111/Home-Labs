@@ -43,7 +43,8 @@ Failed password
 FAILED PASSWORD
 failed password
 
-## Evidence Screenshot
+## Evidence Screenshot:
+![Ubuntu Logs](images/ubuntuss.png)
 
 ## 5. SIEM Detection (Splunk)
 
@@ -58,7 +59,8 @@ index=main "Failed password"
 - rex → Extracts source IP using regex
 - stats count by src_ip → Counts attempts per attacker IP
 
-### Detection Output
+### Detection Output Screenshot:
+![Splunk Detection](images/bfl.png)
 
 ## 6. Findings
 
