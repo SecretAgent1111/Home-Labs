@@ -1,4 +1,4 @@
-# Suspicious Remote Command Execution Detection (Linux SOC Lab)
+# Suspicious Remote Command Execution Detection
 
 ---
 
