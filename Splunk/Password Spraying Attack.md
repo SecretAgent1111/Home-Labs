@@ -1,4 +1,4 @@
-# Password Spray Attack Detection using Splunk (SOC L2 Lab)
+# Password Spray Attack Detection using Splunk
 
 ---
 
@@ -27,7 +27,7 @@ A password spray attack was performed using Hydra targeting SSH on the Ubuntu se
 
 ### Command Used
 ```
-hydra -l admin -L /usr/share/wordlists/common-users.txt ssh://192.168.1.229
+hydra -l user.txt -P Password123 ssh://192.168.1.229
 ```
 
 ---
