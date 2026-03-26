@@ -27,7 +27,7 @@ A password spray attack was performed using Hydra targeting SSH on the Ubuntu se
 
 ### Command Used
 ```
-hydra -l user.txt -P Password123 ssh://192.168.1.229
+hydra -l user.txt -P Password123 ssh://192.168.1.65 -v
 ```
 
 ---
