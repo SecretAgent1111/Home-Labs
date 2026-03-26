@@ -42,7 +42,7 @@ Authentication logs were analyzed from:
 `/var/log/auth.log`
 
 ### Evidence Screenshot
-![Attack Screenshot](./images/kalipsa.png)
+![Attack Screenshot](./images/ubuntupsa.png)
 
 ---
 
@@ -62,7 +62,7 @@ index=main "Failed password"
 - `stats count by src_ip` → Counts attempts per attacker IP
 
 ### Detection Output Screenshot
-![Splunk Detection](./images/ubuntupsa.png)
+![Splunk Detection](./images/splunkpsa.png)
 
 ---
 
