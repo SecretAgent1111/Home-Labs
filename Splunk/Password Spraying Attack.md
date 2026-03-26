@@ -36,14 +36,6 @@ hydra -l user.txt -P Password123 ssh://192.168.1.229
 ![Attack Screenshot](./images/kalipsa.png)
 
 
-## 4. Log Evidence (Ubuntu)
-
-Authentication logs were analyzed from:
-`/var/log/auth.log`
-
-### Evidence Screenshot
-![Attack Screenshot](./images/ubuntupsa.png)
-
 ---
 
 ## 5. SIEM Detection (Splunk)
