@@ -68,9 +68,10 @@ Continuous execution
 Persistent attacker access
 Step 4 — Start Listener (Attacker)
 nc -lvnp 4444
-📸 Screenshot — Reverse Shell Established
+Evidence Screenshot — Reverse Shell Established
 
-👉 Insert screenshot here
+![Ubuntu Logs](images/kalicron.png)
+
 
 📌 Screenshot 1: Reverse shell connection from Ubuntu to Kali
 📡 Log Generation
@@ -84,7 +85,7 @@ Example log:
 CRON[3178]: (root) CMD (/tmp/reverse.sh)
 📸 Screenshot — Syslog Verification
 
-👉 Insert screenshot here
+![Ubuntu Logs](images/ubucron.png)
 
 📌 Screenshot 2: Syslog showing repeated execution of reverse.sh
 📊 Detection in Splunk
@@ -98,7 +99,7 @@ index=main sourcetype=linux:syslog "CRON"
 | table _time host _raw
 📸 Screenshot — Splunk Detection
 
-👉 Insert screenshot here
+![Ubuntu Logs](images/splunkcron.png)
 
 📌 Screenshot 3: Splunk logs showing cron execution of /tmp/reverse.sh
 🚨 Alert Analysis (True Positive)
