@@ -1,4 +1,5 @@
-# Privilege Escalation Detection — sudo to root (Splunk Lab)
+# Privilege Escalation Detection
+
 
 ---
 
