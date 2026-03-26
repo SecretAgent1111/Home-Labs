@@ -91,7 +91,7 @@ The following activities were observed:
 
 ---
 
-## 7. SOC L2 Incident Report
+## 7. Case Report
 
 ### 7.1 Time of Activity
 
