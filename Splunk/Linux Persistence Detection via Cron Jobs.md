@@ -110,15 +110,15 @@ Shows the scheduled malicious cron job running every minute.
 
 ![Splunk Detection](images/ubucron.png)
 
-### 2. Cron Execution Logs
+### 2. Reverse Shell Connection
 
-System logs showing the cron daemon executing `/tmp/backdoor.sh` at regular intervals.
+Reverse shell connection from victim to attacker's Netcat listener on port 4444.
 
 ![Splunk Detection](images/kalicron.png)
 
-### 3. Reverse Shell Connection
+### 3. Cron Execution Logs
 
-Attacker's Netcat listener receiving incoming connections from the victim.
+Splunk dashboard showing cron execution logs with repeated CMD entries for /tmp/reverse.sh.
 
 ![Splunk Detection](images/splunkcron.png)
 
