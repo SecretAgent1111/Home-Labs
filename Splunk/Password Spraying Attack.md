@@ -49,7 +49,7 @@ cat /var/log/auth.log | grep -ai "Failed password"
   - Ensures matching of: Failed password, FAILED PASSWORD, failed password
 
 ### Evidence Screenshot
-![Ubuntu Logs](images/password-spray-logs.png)
+![Attack Screenshot](./images/attack.png)
 
 ---
 
@@ -69,7 +69,7 @@ index=main "Failed password"
 - `stats count by src_ip` → Counts attempts per attacker IP
 
 ### Detection Output Screenshot
-![Splunk Detection](images/password-spray-detection.png)
+![Splunk Detection](./images/splunk_detection.png)
 
 ---
 
