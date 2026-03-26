@@ -149,3 +149,10 @@ index=main "Failed password"
 - SSH authentication attempts on port 22
 - High frequency of login failures
 - Multiple user account targeting pattern
+
+## 11. MITRE ATT&CK Mapping
+
+| Tactic | Technique | ID |
+|--------|-----------|----|
+| Credential Access | Brute Force: Password Spraying | T1110.003 |
+| Initial Access | Remote Services: SSH | T1021.006 |
