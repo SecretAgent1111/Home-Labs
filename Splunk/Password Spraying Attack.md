@@ -32,21 +32,14 @@ hydra -l user.txt -P Password123 ssh://192.168.1.229
 
 ---
 
+### Evidence Screenshot
+![Attack Screenshot](./images/kalipsa.png)
+
+
 ## 4. Log Evidence (Ubuntu)
 
 Authentication logs were analyzed from:
 `/var/log/auth.log`
-
-### Command Used for Filtering Logs
-```
-cat /var/log/auth.log | grep -ai "Failed password"
-```
-
-### Explanation of Flags
-- `-a` → Treats binary files as text
-  - Useful when logs contain mixed or non-standard characters
-- `-i` → Case-insensitive search
-  - Ensures matching of: Failed password, FAILED PASSWORD, failed password
 
 ### Evidence Screenshot
 ![Attack Screenshot](./images/kalipsa.png)
