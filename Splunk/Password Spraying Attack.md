@@ -38,7 +38,7 @@ hydra -l user.txt -P Password123 ssh://192.168.1.229
 
 ---
 
-## 5. SIEM Detection (Splunk)
+## 4. SIEM Detection (Splunk)
 
 ### SPL Query Used
 ```
@@ -58,7 +58,7 @@ index=main "Failed password"
 
 ---
 
-## 6. Findings
+## 5. Findings
 
 | Metric           | Value                |
 |-----------------|----------------------|
@@ -70,7 +70,7 @@ index=main "Failed password"
 
 ---
 
-## 7. Analysis
+## 6. Analysis
 
 - Multiple failed login attempts observed from a single IP across different usernames
 - Pattern matches automated password spray activity
@@ -80,7 +80,7 @@ index=main "Failed password"
 
 ---
 
-## 8. Impact Assessment
+## 7. Impact Assessment
 
 - Potential credential compromise
 - Unauthorized access risk
@@ -89,7 +89,7 @@ index=main "Failed password"
 
 ---
 
-## 9. Recommendations
+## 8. Recommendations
 
 - Implement account lockout policies
 - Enforce strong password policies
@@ -101,7 +101,7 @@ index=main "Failed password"
 
 ---
 
-## 10. Alert Classification
+## 9. Alert Classification
 
 ### True Positive (TP)
 
