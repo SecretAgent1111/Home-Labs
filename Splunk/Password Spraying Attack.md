@@ -2,121 +2,157 @@
 
 ---
 
-## Objective
+## 1. Objective
 
-Simulate a Password Spray attack using Kali Linux and detect malicious authentication behavior in Splunk by analyzing Linux SSH logs.
-
----
-
-## Lab Architecture
-
-| Role     | System                         |
-|----------|------------------------------|
-| Attacker | Kali Linux                   |
-| Victim   | Ubuntu Server                |
-| SIEM     | Splunk Enterprise (Windows 11)|
+Simulate and detect a password spray attack using:
+- Kali Linux (attacker)
+- Ubuntu Server (victim)
+- Splunk Enterprise (SIEM)
 
 ---
 
-## Attack Simulation
+## 2. Lab Architecture
 
-- A password spray attack was executed from Kali Linux targeting SSH service on the Ubuntu server.
+| Role      | System         | Purpose              |
+|-----------|----------------|----------------------|
+| Attacker  | Kali Linux    | Launch spray attack  |
+| Victim    | Ubuntu Server | Generate auth logs   |
+| SIEM      | Splunk        | Detect attack        |
 
-### Attack Command Used:
+---
 
-hydra -L user.txt -p Password123 ssh://192.168.1.65 -V
+## 3. Attack Simulation
 
-### Attack Behavior:
+A password spray attack was performed using Hydra targeting SSH on the Ubuntu server.
 
-- Single password used across multiple accounts
-- Multiple usernames targeted (user1, user2, user3, admin1, ubuntu)
-- Same source IP performing all attempts
-- Sequential authentication attempts
+### Command Used
+```
+hydra -l admin -L /usr/share/wordlists/common-users.txt ssh://192.168.1.229
+```
 
-## Attack Evidence (Kali Linux)
+---
 
-👉 Upload your Hydra attack screenshot here:
+## 4. Log Evidence (Ubuntu)
 
-## Log Source
+Authentication logs were analyzed from:
+`/var/log/auth.log`
 
-- Log File: /var/log/auth.log
-- Log Type: SSH Authentication Logs
-- Forwarded via Splunk Universal Forwarder
+### Command Used for Filtering Logs
+```
+cat /var/log/auth.log | grep -ai "Failed password"
+```
 
-## Detection in Splunk
+### Explanation of Flags
+- `-a` → Treats binary files as text
+  - Useful when logs contain mixed or non-standard characters
+- `-i` → Case-insensitive search
+  - Ensures matching of: Failed password, FAILED PASSWORD, failed password
 
-SPL Query Used:
-index=* sourcetype=auth "Failed password"
+### Evidence Screenshot
+![Ubuntu Logs](images/password-spray-logs.png)
 
+---
 
-| rex "Failed password for (invalid user )?(?<user>\w+)"
+## 5. SIEM Detection (Splunk)
 
+### SPL Query Used
+```
+index=main "Failed password"
+| rex "from (?<src_ip>\\d+\\.\\d+\\.\\d+\\.\\d+)"
+| stats count by src_ip
+```
 
-| rex "from (?<src_ip>\d+\.\d+\.\d+\.\d+)"
+### Explanation
+- `index=main` → Searches main index
+- `"Failed password"` → Filters failed login events
+- `rex` → Extracts source IP using regex
+- `stats count by src_ip` → Counts attempts per attacker IP
 
+### Detection Output Screenshot
+![Splunk Detection](images/password-spray-detection.png)
 
-| stats count by user, src_ip
+---
 
+## 6. Findings
 
-## Detection Evidence (Splunk)
+| Metric           | Value                |
+|-----------------|----------------------|
+| Attacker IP     | 192.168.1.229        |
+| Attempts        | 12                   |
+| Target          | SSH (Port 22)        |
+| Log Source      | /var/log/auth.log    |
+| Attack Type     | Password Spray       |
 
+---
 
-👉 Upload your Splunk detection screenshot here:
+## 7. Analysis
 
-## Analysis
+- Multiple failed login attempts observed from a single IP across different usernames
+- Pattern matches automated password spray activity
+- Attacker tested common usernames (admin, root, user, test)
+- No successful login detected in this dataset
+- Splunk required manual field extraction due to unstructured logs
 
-### Key Observations:
+---
+
+## 8. Impact Assessment
+
+- Potential credential compromise
+- Unauthorized access risk
+- Indicator of automated attack activity
+- Evidence of reconnaissance phase
+
+---
+
+## 9. Recommendations
+
+- Implement account lockout policies
+- Enforce strong password policies
+- Use SSH key-based authentication
+- Deploy Fail2Ban for IP blocking
+- Configure SIEM alerts for threshold breaches
+- Monitor authentication logs continuously
+- Implement network-level rate limiting
+
+---
+
+## 10. Alert Classification
+
+### True Positive (TP)
+
+**Time of Activity:**  
+25 March 2026
+
+**List of Affected Entities:**  
 - Source IP: 192.168.1.229
-- Targeted Users:
-ubuntu,
-user1,
-user2,
-user3,
-admin1,
+- Destination Host: Ubuntu Server
+- Service Targeted: SSH (Port 22)
+- Log Source: /var/log/auth.log
 
-### Behavior Identified:
+**Reason for Classifying as True Positive:**  
+- Multiple failed login attempts from a single IP targeting multiple usernames
+- Activity pattern matches automated password spray behavior
+- Logs confirm repeated authentication failures within a short timeframe
+- Attack originated externally (Kali attacker machine)
 
-- Single IP attempting authentication across multiple users
-- Repeated failed login attempts
-- Presence of "invalid user" logs (username enumeration)
-- Pattern matches password spray attack technique
+**Reason for Escalating the Alert:**  
+- Threshold of failed login attempts reached (≥10 attempts)
+- Multiple user accounts targeted (spray pattern)
+- Potential risk of credential compromise
+- Password spray attacks are a common initial access technique
 
-🎯 Affected Entities:
-ubuntu
-user1
-user2
-user3
-admin1
-🌐 Source of Attack:
-IP Address: 192.168.1.229
-Origin: Kali Linux (Attacker Machine)
-🧠 Reason for Classification:
-Confirmed attack execution from attacker machine
-Same password used across multiple accounts
-Multiple authentication failures within short time frame
-Same source IP targeting multiple users
-Matches known Password Spray attack pattern
-🚨 Reason for Escalation:
-Indicates active credential access attempt
-High risk of account compromise if successful
-Attack can bypass traditional account lockout controls
-Evidence of username enumeration increases threat level
-🧬 MITRE ATT&CK Mapping:
-Technique: Password Spraying (T1110.003)
-🧾 Indicators of Compromise (IOCs):
-Source IP: 192.168.1.229
-Multiple failed SSH login attempts
-Authentication attempts across multiple users
-Repeated use of common password
-🛡️ Recommended Remediation Actions
-Block or isolate the attacking IP address
-Implement Multi-Factor Authentication (MFA)
-Enforce strong password policies
-Configure account lockout thresholds
-Monitor authentication logs for similar patterns
-Deploy intrusion detection or prevention systems
-📚 Key Learnings
-Password Spray attacks target multiple accounts with a single password
-Detection relies on identifying patterns across users, not just failed attempts
-Field extraction (rex) is essential when logs are unstructured
-Even unsuccessful attacks are valid security incidents
+**Recommended Remediation Actions:**  
+- Block attacker IP at firewall level
+- Enable account lockout policy
+- Enforce strong password policies
+- Implement SSH key-based authentication
+- Deploy Fail2Ban for automated blocking
+- Monitor authentication logs continuously
+- Review firewall and IDS logs for related activity
+
+**List of Attack Indicators (IOCs):**  
+- Repeated "Failed password" entries in logs
+- Source IP: 192.168.1.229
+- SSH authentication attempts on port 22
+- High frequency of login failures
+- Multiple user account targeting pattern
