@@ -26,8 +26,8 @@ To simulate attacker techniques and detect:
 
 | Component | Role |
 |-----------|------|
-| Kali Linux | Attacker (payload hosting) |
-| Ubuntu | Victim (command execution) |
+| Kali Linux | Attacker (Payload Hosting) |
+| Ubuntu | Victim (Command Execution) |
 | Splunk (Windows) | SIEM for log analysis |
 
 ---
