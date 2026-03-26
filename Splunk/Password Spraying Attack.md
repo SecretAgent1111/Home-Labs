@@ -62,7 +62,7 @@ index=main "Failed password"
 - `stats count by src_ip` → Counts attempts per attacker IP
 
 ### Detection Output Screenshot
-![Splunk Detection](./images/splunkpsa.png)
+![Splunk Detection](./images/ubuntupsa.png)
 
 ---
 
