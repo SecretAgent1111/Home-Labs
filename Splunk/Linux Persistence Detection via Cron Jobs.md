@@ -108,13 +108,19 @@ Cron syntax fields (5 fields):
 
 Shows the scheduled malicious cron job running every minute.
 
+![Splunk Detection](images/ubucron.png)
+
 ### 2. Cron Execution Logs
 
 System logs showing the cron daemon executing `/tmp/backdoor.sh` at regular intervals.
 
+![Splunk Detection](images/kalicron.png)
+
 ### 3. Reverse Shell Connection
 
 Attacker's Netcat listener receiving incoming connections from the victim.
+
+![Splunk Detection](images/spunlkcron.png)
 
 ## Log Generation
 
