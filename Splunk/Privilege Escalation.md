@@ -30,6 +30,8 @@ sudo su
 
 This command lets a standard user (bluevarun) escalate to root privileges, effectively giving full system access. It's a classic privilege escalation technique that attackers commonly use.
 
+### Evidence Screenshot
+![Attack Screenshot](./images/ubuntupsa.png)
 ---
 
 ## 4. Evidence — Attack Execution
