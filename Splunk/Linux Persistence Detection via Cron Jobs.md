@@ -120,7 +120,7 @@ System logs showing the cron daemon executing `/tmp/backdoor.sh` at regular inte
 
 Attacker's Netcat listener receiving incoming connections from the victim.
 
-![Splunk Detection](images/spunlkcron.png)
+![Splunk Detection](images/splunkcron.png)
 
 ## Log Generation
 
