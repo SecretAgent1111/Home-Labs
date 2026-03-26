@@ -53,6 +53,8 @@ index=* sourcetype=auth ("sudo" OR "su") ("session opened for user root" OR "COM
 
 ### Evidence — Splunk Logs
 
+![Splunk Screenshot](./images/splunkpe.png)
+
 **Key Log Evidence:**
 
 - `sudo: bluevarun : USER=root ; COMMAND=/usr/bin/su`
