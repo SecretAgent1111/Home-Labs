@@ -1,4 +1,4 @@
-# Lateral Movement Detection using Splunk (SOC L2 Use Case)
+# Lateral Movement Detection using Splunk
 
 ## Objective
 
@@ -140,7 +140,7 @@ Identifies brute-force attacks from attacker IP.
 **Lateral Movement via Credential Abuse**  
 **Classification: TRUE POSITIVE**
 
-**Time of Activity:** *(Add from Splunk)*
+**Time of Activity:** 
 
 **Affected Entities:**
 | Entity     | Value              |
