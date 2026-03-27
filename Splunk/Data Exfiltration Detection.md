@@ -79,7 +79,7 @@ ls -lh stolen_data.bin
 ### Detection Query 1 — Command Execution
  
 ```spl
-index=main sourcetype=linux_audit "EXECVE"
+index=* sourcetype=linux_audit "EXECVE"
 | table _time host a0 a1 a2 uid
 ```
 ![Ubuntu Logs](images/splunkde.png)
