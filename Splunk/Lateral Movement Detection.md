@@ -1,4 +1,4 @@
-# Lateral Movement Detection using Splunk
+# Lateral Movement Detection
 
 ## Objective
 
