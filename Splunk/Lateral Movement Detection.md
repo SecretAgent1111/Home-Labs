@@ -32,7 +32,7 @@ ssh user1@192.168.1.66
 ```
 
 **Screenshot 1 — Initial Access + Privilege Pivot**  
-*(Upload your 4th screenshot here)*
+![Splunk Detection](kalilat.png)
 
 SSH login successful. Attacker switches users:
 ```bash
@@ -53,7 +53,7 @@ Using Hydra, attacker attempts multiple logins:
 - Multiple authentication patterns
 
 **Screenshot 2 — Raw Logs in Splunk**  
-*(Upload your 1st screenshot here)*
+![Splunk Detection](lat1.png)
 
 **Shows:**
 - Failed password attempts
@@ -76,7 +76,7 @@ index=* sourcetype=linux:auth
 ```
 
 **Screenshot 3 — Detection Output**  
-*(Upload your 2nd screenshot here)*
+![Splunk Detection](lat2.png)
 
 **Explanation**
 
@@ -102,7 +102,7 @@ index=* sourcetype=linux:auth
 ```
 
 **Screenshot 4 — Timeline View**  
-*(Upload your 3rd screenshot here)*
+![Splunk Detection](lat3.png)
 
 **Explanation:**  
 Helps SOC analysts track attack progression, identify brute force → success → pivot patterns, and understand attacker behavior step-by-step.
