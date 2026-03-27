@@ -86,26 +86,6 @@ index=* sourcetype=linux_audit "EXECVE"
  
 ---
  
-### Detection Query 2 — Suspicious Tools
- 
-```spl
-index=main sourcetype=linux_audit "EXECVE"
-| search a0="nc" OR a0="cat"
-| stats count by host, a0
-```
- 
----
- 
-### Detection Query 3 — Advanced Correlation (SOC L2)
- 
-```spl
-index=main sourcetype=linux_audit
-| transaction host maxspan=2m
-| search "EXECVE"
-```
- 
----
- 
 ### Key Observations from Logs
  
 - `/bin/sh -c /tmp/reverse.sh` → suspicious script execution
