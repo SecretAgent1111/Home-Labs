@@ -51,7 +51,7 @@ hydra -l user1 -P small.txt ssh://192.168.1.66 -t 4
 - Simulates realistic brute-force attack
 
 **Screenshot 1 — Attack Execution (Hydra)**  
-*(Upload your 3rd screenshot here)*
+![Splunk Detection](images/kalial.png)
 
 ### Attack Result
 
@@ -60,7 +60,7 @@ hydra -l user1 -P small.txt ssh://192.168.1.66 -t 4
 - Further authentication attempts blocked
 
 **Screenshot 2 — Account Lockout Evidence (faillock)**  
-*(Upload your 2nd screenshot here)*
+![Splunk Detection](images/ubuntual.png)
 
 **Analysis from faillock output:**
 - Source IP: `192.168.1.64`
@@ -80,7 +80,7 @@ index=* sourcetype=linux:auth
 ```
 
 **Screenshot 3 — Splunk Detection Output**  
-*(Upload your 1st screenshot here)*
+![Splunk Detection](images/splunkal.png)
 
 **SPL Query Explanation**
 
