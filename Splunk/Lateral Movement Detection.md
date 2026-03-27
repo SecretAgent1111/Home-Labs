@@ -129,7 +129,7 @@ Identifies brute-force attacks from attacker IP.
 
 ---
 
-## SOC Analysis
+## Report
 
 **Key Findings:**
 - Single IP: `192.168.1.64`
