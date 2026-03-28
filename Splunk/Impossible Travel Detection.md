@@ -56,6 +56,8 @@ The log file was ingested into Splunk with the following configuration:
 
 ## Detection Logic (SPL)
 
+![Splunk Detection](images/splunkit.png)
+
 ```spl
 index=main sourcetype=login_logs
 | rex "user=(?<user>\S+)"
@@ -71,6 +73,8 @@ index=main sourcetype=login_logs
 ---
 
 ## SPL Query Explanation
+
+
 
 ### 1. Search Scope
 
