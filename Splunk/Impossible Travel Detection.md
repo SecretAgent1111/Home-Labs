@@ -67,7 +67,7 @@ index=main sourcetype=login_logs
 Detection Output
 
 Add your screenshot here:
-
+![Splunk Detection](images/splunkit.png)
 Incident Analysis
 Field	Value
 User	varun
