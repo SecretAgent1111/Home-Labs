@@ -1,19 +1,21 @@
-# Impossible Travel Detection 
+ Impossible Travel Detection using Splunk Enterprise
 
 ## Overview
 
-This project demonstrates detection of *Impossible Travel*, a common cloud security use case where a user logs in from geographically distant locations within a short time frame. Such behavior is typically indicative of credential compromise or unauthorized access.
+This project demonstrates the detection of *Impossible Travel*, a behavioral security use case commonly implemented in cloud and identity security platforms.
 
-The detection logic is implemented using Splunk SPL by correlating login events based on user identity, location, and timestamp.
+Impossible travel occurs when a user logs in from two geographically distant locations within a time frame that is physically impossible. This behavior is a strong indicator of potential credential compromise or unauthorized access.
+
+Detection is implemented using Splunk Search Processing Language (SPL) by correlating login events based on user identity, location, and timestamp.
 
 ---
 
 ## Objective
 
-- Detect abnormal login behavior across different geolocations  
+- Detect abnormal login behavior across multiple geolocations  
 - Identify potential account compromise scenarios  
 - Perform behavioral analysis using event correlation  
-- Develop a practical SOC detection use case  
+- Build a practical SOC detection use case using Splunk  
 
 ---
 
@@ -39,7 +41,7 @@ The following login activity was simulated:
 2026-03-28T18:00:00 user=alex ip=5.5.5.5 location=UK
 
 
-The user `varun` appears to log in from the USA and India within 30 minutes, which is not physically possible and indicates suspicious activity.
+In this scenario, the user `varun` logs in from the USA and India within 30 minutes, which is not physically possible and indicates suspicious activity.
 
 ---
 
@@ -64,10 +66,59 @@ index=main sourcetype=login_logs
 | where isnotnull(prev_location)
 | where location!=prev_location AND time_diff < 120
 | table user prev_location location time_diff
+SPL Query Explanation
+1. Search Scope
+index=main sourcetype=login_logs
+
+Retrieves login events from the relevant dataset.
+
+2. Field Extraction
+| rex "user=(?<user>\S+)"
+| rex "location=(?<location>\S+)"
+
+Extracts structured fields from raw logs:
+
+user → username
+location → login location
+3. Event Ordering
+| sort 0 user _time
+
+Sorts events chronologically per user to ensure correct sequence for correlation.
+
+4. Previous Event Correlation
+| streamstats current=f last(location) as prev_location last(_time) as prev_time by user
+
+Tracks the previous login event for each user:
+
+Previous location
+Previous timestamp
+5. Time Difference Calculation
+| eval time_diff=round((_time - prev_time)/60,2)
+
+Calculates the time difference (in minutes) between consecutive logins.
+
+6. Filtering Valid Events
+| where isnotnull(prev_location)
+
+Removes the first login event per user since it has no previous reference.
+
+7. Detection Condition
+| where location!=prev_location AND time_diff < 120
+
+Flags suspicious activity where:
+
+Login location changes
+Time difference is less than 120 minutes
+8. Output Formatting
+| table user prev_location location time_diff
+
+Displays the final detection output.
+
 Detection Output
 
-Add your screenshot here:
 ![Splunk Detection](images/splunkit.png)
+
+/screenshots/impossible_travel_detection.png
 Incident Analysis
 Field	Value
 User	varun
@@ -80,40 +131,27 @@ Time of Activity:
 2026-03-28
 
 Affected Entity:
-User account: varun
+User: varun
 
 Reason for Classification:
 
 Login from geographically distant locations
-Unrealistic travel time between locations
-Strong indicator of credential compromise
+Unrealistic travel time
+Indicates possible credential compromise
 
 Reason for Escalation:
 
 Potential account takeover
-Unauthorized access to systems
+Unauthorized system access
 
 Recommended Actions:
 
 Force password reset
 Enable multi-factor authentication (MFA)
-Review login activity and session history
+Review login history and sessions
 Block or monitor suspicious IP addresses
-False Positive Scenarios
-VPN usage causing location changes
-Corporate proxy infrastructure
-Mobile network switching between regions
-Challenges and Resolution
-Initial detection failed due to incorrect field extraction using regex
-Event correlation did not work due to improper sorting
-Issues were resolved by:
-Using \S+ for accurate field extraction
-Sorting events before applying streamstats
-Key Learnings
-Behavioral detection is more effective than signature-based approaches
-Event sequencing is critical for correlation-based detections
-Splunk streamstats enables powerful temporal analysis
-Impossible travel detection is widely used in cloud security monitoring
+
+
 MITRE ATT&CK Mapping
 Technique	ID
 Valid Accounts	T1078
