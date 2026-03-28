@@ -4,7 +4,7 @@ A PHP development server was started to host the payload file.
 
 **Add Screenshot 1 Here**
 
-![Splunk Detection](images/webpapa.png)
+![Splunk Detection](images/webpa.png)
 
 **Observation:**
 
