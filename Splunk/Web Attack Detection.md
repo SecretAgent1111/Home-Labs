@@ -35,7 +35,7 @@ curl "http://192.168.1.64/index.html?q=<script>alert(1)</script>"
 
 The following entries were captured in the Apache access log:
 
-![Splunk Detection](images/kaliwa.png)
+![Splunk Detection](images/kalixss.png)
 
 ```
 GET /index.html?q=%3Cscript%3Ealert(1)%3C/script%3E HTTP/1.1
@@ -61,7 +61,7 @@ index=* source="/var/log/apache2/access.log"
 | search decoded="*script*" OR decoded="*OR 1=1*"
 | table _time, decoded
 ```
-![Splunk Detection](images/splunkwa.png)
+![Splunk Detection](images/splunkxss.png)
 
 ---
 
