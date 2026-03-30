@@ -4,7 +4,7 @@
 
 ## Overview
 
-This project demonstrates the detection and analysis of an SSH brute force attack using Splunk Enterprise in a controlled home lab environment.
+This project demonstrates the detection and analysis of an **SSH brute force attack** using Splunk Enterprise in a controlled home lab environment.
 
 The attack was simulated using Hydra from an attacker machine, while logs were collected from a Linux victim system and analyzed in Splunk.
 
@@ -12,11 +12,11 @@ The attack was simulated using Hydra from an attacker machine, while logs were c
 
 ## Lab Architecture
 
-| Component    | Role                          |
-|--------------|-------------------------------|
-| Windows 11   | Splunk Enterprise (SIEM)      |
-| Ubuntu       | Victim (SSH Server)           |
-| Kali Linux   | Attacker (Hydra Tool)         |
+| Component  | Role                     |
+|------------|--------------------------|
+| Windows 11 | Splunk Enterprise (SIEM) |
+| Ubuntu     | Victim (SSH Server)      |
+| Kali Linux | Attacker (Hydra Tool)    |
 
 ---
 
@@ -26,14 +26,16 @@ The attack was simulated using Hydra from an attacker machine, while logs were c
 hydra -l ubuntu -p rockyou.txt ssh://192.168.1.66
 ```
 
-![Splunk Detection](images/1la.png)
+![Hydra Attack](images/1la.png)
 
-**Observations:**
+**Figure 1:** SSH brute force attack executed using Hydra from Kali Linux.
+
+### Observations
 
 - Multiple failed login attempts generated
 - Targeted user: `ubuntu`
-- Attacker IP: `192.168.1.64`
-- No valid password found
+- Attacker IP identified: `192.168.1.64`
+- No valid credentials discovered
 
 ---
 
@@ -45,11 +47,13 @@ index=* sourcetype=linux:auth
 
 ![Splunk Detection](images/2la.png)
 
-**Explanation:**
+**Figure 2:** Authentication logs successfully ingested into Splunk.
 
-- Confirms logs are successfully ingested
-- Filters Linux authentication logs
-- Base query for all detections
+### Explanation
+
+- Confirms successful ingestion of logs
+- Filters Linux authentication events
+- Serves as the baseline query
 
 ---
 
@@ -64,19 +68,20 @@ index=* sourcetype=linux:auth "Failed password"
 
 ![Splunk Detection](images/3la.png)
 
-**Explanation:**
+**Figure 3:** Aggregated failed login attempts by source IP.
 
-- Detects failed SSH logins
+### Explanation
+
+- Detects failed SSH authentication attempts
 - Extracts attacker IP using regex
 - Aggregates attempts per IP
-- Identifies top attacker
 
-**Finding:**
+### Findings
 
-| Field       | Value         |
-|-------------|---------------|
-| Attacker IP | 192.168.1.64  |
-| Attempts    | 3             |
+| Field       | Value        |
+|-------------|--------------|
+| Attacker IP | 192.168.1.64 |
+| Attempts    | 3            |
 
 ---
 
@@ -92,11 +97,14 @@ index=* sourcetype=linux:auth
 | stats count by severity
 ```
 
->![Splunk Detection](images/4la.png)
-**Explanation:**
+![Splunk Detection](images/4la.png)
 
-- Assigns severity based on log type
-- Helps SOC prioritize alerts
+**Figure 4:** Events categorized by severity levels.
+
+### Explanation
+
+- Assigns severity dynamically
+- Helps prioritize security events
 
 ---
 
@@ -109,10 +117,12 @@ index=* sourcetype=linux:auth ("Failed password" OR "Accepted password")
 
 ![Splunk Detection](images/5la.png)
 
-**Explanation:**
+**Figure 5:** Raw authentication logs showing failed SSH attempts.
 
-- Shows original logs for investigation
-- Useful for incident validation
+### Explanation
+
+- Displays original logs
+- Used for validation and investigation
 
 ---
 
@@ -126,10 +136,12 @@ index=* sourcetype=linux:auth "Failed password"
 
 ![Splunk Detection](images/6la.png)
 
-**Explanation:**
+**Figure 6:** Time-based visualization of attack activity.
 
-- Visualizes attack pattern over time
-- Detects burst activity (automation indicator)
+### Explanation
+
+- Shows attack frequency over time
+- Helps identify automated behavior
 
 ---
 
@@ -144,15 +156,17 @@ index=* sourcetype=linux:auth ("Failed password" OR "Accepted password")
 
 ![Splunk Detection](images/7la.png)
 
-**Explanation:**
+**Figure 7:** Correlation of failed vs successful login attempts.
 
-- Correlates failed and successful attempts
-- Helps detect account compromise
+### Explanation
 
-**Finding:**
+- Combines failed and successful events
+- Helps determine compromise
+
+### Findings
 
 - Only failed attempts observed
-- No successful login
+- No successful login detected
 
 ---
 
@@ -178,21 +192,31 @@ index=* sourcetype=linux:auth ("Failed password" OR "Accepted password")
 
 ## Recommendations
 
-- Enable account lockout policy
+- Implement account lockout policies
 - Use SSH key-based authentication
 - Disable password login
-- Implement MFA
+- Enable MFA
 - Restrict SSH access
 
 ---
 
 ## MITRE ATT&CK Mapping
- 
-| Technique                        | ID        | Description                                               |
-|----------------------------------|-----------|-----------------------------------------------------------|
-| Brute Force                      | T1110     | Repeated login attempts to guess valid credentials        |
-| Brute Force: Password Spraying   | T1110.003 | Trying common passwords across multiple accounts          |
-| Valid Accounts                   | T1078     | Using compromised credentials for access                  |
-| Remote Services: SSH             | T1021.004 | Exploiting SSH for remote access                          |
- 
+
+| Technique            | ID        | Description                                  |
+|----------------------|-----------|----------------------------------------------|
+| Brute Force          | T1110     | Repeated login attempts to guess credentials |
+| Password Spraying    | T1110.003 | Common passwords across accounts             |
+| Valid Accounts       | T1078     | Use of compromised credentials               |
+| Remote Services: SSH | T1021.004 | Exploiting SSH access                        |
+
 ---
+
+## Conclusion
+
+This project demonstrates:
+
+- Threat detection using Splunk
+- Log analysis and validation
+- Regex-based field extraction
+- Attack correlation
+- SOC-level investigation workflow
