@@ -97,7 +97,7 @@ index=* sourcetype=linux:auth
 | stats count by severity
 ```
 
-![Splunk Detection](images/4la.png)
+![Splunk Detection](images/7la.png)
 
 **Figure 4:** Events categorized by severity levels.
 
@@ -115,7 +115,7 @@ index=* sourcetype=linux:auth ("Failed password" OR "Accepted password")
 | table _time, host, _raw
 ```
 
-![Splunk Detection](images/5la.png)
+![Splunk Detection](images/6la.png)
 
 **Figure 5:** Raw authentication logs showing failed SSH attempts.
 
@@ -134,7 +134,7 @@ index=* sourcetype=linux:auth "Failed password"
 | timechart count by src_ip span=1m
 ```
 
-![Splunk Detection](images/6la.png)
+![Splunk Detection](images/5la.png)
 
 **Figure 6:** Time-based visualization of attack activity.
 
@@ -154,7 +154,7 @@ index=* sourcetype=linux:auth ("Failed password" OR "Accepted password")
 | stats count by src_ip, action
 ```
 
-![Splunk Detection](images/7la.png)
+![Splunk Detection](images/4la.png)
 
 **Figure 7:** Correlation of failed vs successful login attempts.
 
