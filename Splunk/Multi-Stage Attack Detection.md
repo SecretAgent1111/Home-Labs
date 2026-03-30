@@ -1,5 +1,4 @@
 # Multi-Stage Attack Detection
-## (SSH Brute Force → Payload Delivery → Execution)
 
 ---
 
@@ -120,7 +119,7 @@ index=* "Failed password"
 - Counts attempts per IP
 - Filters suspicious activity (>5 attempts)
 
-![Brute Force Detection](images/bruteforce.png)
+![Ubuntu Logs](images/ma3.png)
 
 ---
 
@@ -138,7 +137,7 @@ index=* "Accepted password"
 - Extracts attacker IP
 - Displays raw log for investigation
 
-![Successful Login](images/login.png)
+![Ubuntu Logs](images/ma4.png)
 
 ---
 
@@ -155,7 +154,7 @@ index=* "wget"
 - Shows time, host, log source, and raw event
 - Detected via Apache logs (`access.log`)
 
-![Payload Download](images/wget.png)
+![Ubuntu Logs](images/ma5.png)
 
 ---
 
@@ -172,7 +171,7 @@ index=* ("malware.txt" OR "payload.sh")
 - Tracks malicious file presence
 - Helps confirm execution stage
 
-![File Drop](images/filedrop.png)
+![Ubuntu Logs](images/ma6.png)
 
 ---
 
@@ -207,7 +206,7 @@ index=*
 
 Only triggers when multiple attack stages occur.
 
-![Correlation Detection](images/correlation.png)
+![Ubuntu Logs](images/ma7.png)
 
 ---
 
