@@ -1,4 +1,4 @@
-# SOC Detection Lab: SSH Brute Force Attack using Splunk
+# Linux Authentication Threat Detection & Investigation
 
 ---
 
