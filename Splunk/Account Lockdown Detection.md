@@ -97,7 +97,7 @@ index=* sourcetype=linux:auth
 
 ---
 
-## SOC Analysis
+## Report
 
 **Key Findings:**
 - Single IP (`192.168.1.64`) performed multiple rapid login attempts
