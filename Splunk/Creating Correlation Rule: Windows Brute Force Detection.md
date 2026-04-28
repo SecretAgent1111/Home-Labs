@@ -129,14 +129,6 @@ The drill-down search allows analysts to:
 - Reduce the time required to begin an investigation
 ---
  
-## 9. Final Notable Title Confirmation
- 
-**[Screenshot: Photo8 – Final saved notable title view]**
- 
-Confirming the alert naming configuration prior to deployment ensures the notable event title is correctly set and human-readable in the Splunk ES incident review queue.
- 
----
- 
 ## 10. Field Enrichment
  
 **[Screenshot: Photo11 – Identity and asset extraction fields]**
