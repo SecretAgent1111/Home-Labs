@@ -141,15 +141,6 @@ The drill-down search allows analysts to:
 Field enrichment provides additional investigative context, enabling analysts to quickly understand the scope and impact of an alert without switching between multiple tools.
  
 ---
- 
-## 11. Correlation Rule in Content Management
- 
-**[Screenshot: Photo5 – List of correlation searches in Splunk ES]**
- 
-Viewing the rule within the Content Management interface confirms that it has been successfully created and is being managed within Splunk Enterprise Security.
- 
----
- 
 ## 12. Final Enabled Rule
  
 **[Screenshot: Photo10 – Final saved and enabled correlation rule]**
