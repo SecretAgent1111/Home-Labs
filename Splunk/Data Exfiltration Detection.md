@@ -22,7 +22,7 @@ Brute force attacks are one of the most frequently observed attack techniques in
  
 ## 1. Correlation Rule Creation (Detection Logic)
  
-![photo](images/photo3.png)
+![photo](images/pho3.png)
  
 ### SPL Query
  
@@ -43,7 +43,7 @@ This logic ensures the detection focuses on suspicious behavior rather than inci
  
 ## 2. Detection Validation
  
-![photo](images/photo4.png)
+![photo](images/pho4.png)
  
 Before deploying any detection, results must be reviewed to:
  
@@ -54,7 +54,7 @@ Before deploying any detection, results must be reviewed to:
  
 ## 3. Scheduling Configuration
  
-![photo](images/photo1.png)
+![photo](images/pho1.png)
  
 | Setting | Value |
 |---|---|
@@ -68,7 +68,7 @@ Brute force attacks occur rapidly, requiring near real-time detection to enable 
  
 ## 4. MITRE ATT&CK Mapping
  
-![photo](images/photo2.png)
+![photo](images/pho2.png)
  
 | Field | Value |
 |---|---|
@@ -81,7 +81,7 @@ Mapping detections to the MITRE ATT&CK framework standardizes detection across e
  
 ## 5. Trigger Conditions and Throttling
  
-![photo](images/photo7.png)
+![photo](images/pho7.png)
  
 | Setting | Value |
 |---|---|
@@ -94,7 +94,7 @@ Throttling by user prevents duplicate alerts for the same account across polling
  
 ## 6. Notable Event Configuration (Dynamic Title)
  
-![photo](images/photo6.png)
+![photo](images/pho6.png)
  
 Using dynamic field references such as `$user$` in the notable event title allows analysts to:
  
@@ -104,7 +104,7 @@ Using dynamic field references such as `$user$` in the notable event title allow
  
 ## 7. Notable Event Full Configuration
  
-![photo](images/photo9.png)
+![photo](images/pho9.png)
  
 | Setting | Value |
 |---|---|
@@ -129,9 +129,9 @@ The drill-down search allows analysts to:
 - Reduce the time required to begin an investigation
 ---
  
-## 10. Field Enrichment
+## 9. Field Enrichment
  
-![photo](images/photo11.png)
+![photo](images/pho11.png)
  
 | Enrichment Type | Fields |
 |---|---|
@@ -141,9 +141,9 @@ The drill-down search allows analysts to:
 Field enrichment provides additional investigative context, enabling analysts to quickly understand the scope and impact of an alert without switching between multiple tools.
  
 ---
-## 12. Final Enabled Rule
+## 10. Final Enabled Rule
  
-![photo](images/photo10.png)
+![photo](images/pho10.png)
  
 Confirming the rule is enabled ensures the detection is active and continuously monitoring for brute force activity.
  
