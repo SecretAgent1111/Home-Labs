@@ -117,7 +117,8 @@ Throttling prevents alert fatigue by suppressing duplicate alerts for the same s
 Severity is set to Medium because this activity is suspicious but requires further validation before escalation.
 
 ---
-## 8. Field Enrichment
+
+## 7. Field Enrichment
 
 [photo6]
 
@@ -127,6 +128,14 @@ Severity is set to Medium because this activity is suspicious but requires furth
 | Asset | `src`, `dest`, `dvc`, `orig_host` |
 
 Enrichment helps correlate IPs with users, systems, and roles, improving investigation context.
+
+---
+
+## 8. Final Enabled Rule
+
+Confirming the rule is enabled ensures the detection is active and continuously monitoring for suspicious activity.
+
+---
 
 ## Investigation Workflow
 
@@ -141,6 +150,65 @@ When this alert is triggered, a SOC analyst should follow these steps:
 7. Escalate if behavior is confirmed malicious
 
 ---
+
+## Detection Tuning and False Positives
+
+This detection may generate alerts in legitimate scenarios, including:
+
+- Vulnerability scanners (e.g., Nessus, Qualys)
+- Network monitoring tools
+- Patch management systems
+- Load balancers or proxy servers
+- Internal services communicating with multiple endpoints
+
+### Tuning Strategies
+
+- Exclude known scanner IPs using lookup tables
+- Increase threshold based on environment baseline
+- Restrict detection to internal-to-internal or external-to-internal traffic
+- Add time-based thresholds (e.g., bursts within 1 minute)
+
+---
+
+## Severity Tuning
+
+| Severity | Condition |
+|---|---|
+| Low | Known scanner or expected behavior |
+| Medium | Unknown internal system scanning |
+| High | External IP scanning internal network |
+| Critical | Confirmed compromise performing lateral movement |
+
+---
+
+## Use Cases Covered
+
+- Detect internal reconnaissance post-compromise
+- Identify external scanning attempts
+- Monitor abnormal service discovery behavior
+- Detect worm-like propagation patterns
+
+---
+
+## Potential Improvements
+
+- Add geo-location enrichment for external IPs
+- Correlate with IDS/IPS alerts
+- Integrate threat intelligence feeds
+- Add port-based analysis
+- Implement risk scoring
+
+---
+
+## Key Learnings
+
+- Distinct count (`dc`) is powerful for anomaly detection
+- Threshold tuning is critical to reduce noise
+- Context enrichment significantly improves triage efficiency
+- Correlation searches should always include drill-down capabilities
+
+---
+
 ## Conclusion
 
 This detection provides strong visibility into early-stage reconnaissance activity. By focusing on connection patterns rather than signatures, it enables detection of both known and unknown threats.
