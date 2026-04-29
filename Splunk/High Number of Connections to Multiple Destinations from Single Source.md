@@ -57,12 +57,17 @@ This step identifies how many unique systems each source is communicating with.
 
 ---
 
-## 2. Detection Validation
+### 2. Detection Validation
 
 ![photo](images/photo1.png)
 
-Validation confirms that certain source IPs are communicating with an abnormally high number of unique destinations, which is not typical for standard user or server behavior.
+The results show that certain source IPs are connecting to a high number of unique destination IP addresses within a short time window.
 
+This behavior is not typical for normal user or application activity. Instead, it strongly indicates reconnaissance techniques such as port scanning or network discovery, where an attacker probes multiple systems to identify active hosts or open services.
+
+For instance, the source IP `192.168.0.3` generated an unusually large number of connections to different destination IPs, which suggests automated scanning rather than legitimate traffic.
+
+This detection is valuable for identifying early-stage attack activity before exploitation occurs, allowing security teams to respond proactively.
 ---
 
 ## 3. Scheduling Configuration
