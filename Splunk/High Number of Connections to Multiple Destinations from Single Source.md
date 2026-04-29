@@ -57,7 +57,7 @@ This step identifies how many unique systems each source is communicating with.
 
 ## 2. Detection Validation
 
-![photo](images/pho1.png)
+[photo1]
 
 Validation confirms that certain source IPs are communicating with an abnormally high number of unique destinations, which is not typical for standard user or server behavior.
 
@@ -65,7 +65,7 @@ Validation confirms that certain source IPs are communicating with an abnormally
 
 ## 3. Scheduling Configuration
 
-![photo](images/pho2.png)
+[photo2]
 
 | Setting | Value |
 |---|---|
@@ -91,7 +91,7 @@ This detection aligns with adversaries attempting to discover services and hosts
 
 ## 5. Trigger Conditions and Throttling
 
-![photo](images/pho3.png)
+[photo3]
 
 | Setting | Value |
 |---|---|
@@ -106,7 +106,7 @@ Throttling prevents alert fatigue by suppressing duplicate alerts for the same s
 
 ## 6. Notable Event Configuration
 
-![photo](images/pho4.png)
+[photo4]
 
 | Setting | Value |
 |---|---|
@@ -120,7 +120,7 @@ Severity is set to Medium because this activity is suspicious but requires furth
 
 ## 7. Drill-Down Search
 
-![photo](images/pho5.png)
+[photo5]
 
 ```spl
 sourcetype=fortigate_traffic srcip=$srcip$
@@ -132,7 +132,7 @@ The drill-down search enables analysts to pivot into raw logs for deeper investi
 
 ## 8. Field Enrichment
 
-![photo](images/pho6.png)
+[photo6]
 
 | Enrichment Type | Fields |
 |---|---|
