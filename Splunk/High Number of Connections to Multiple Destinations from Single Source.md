@@ -117,19 +117,6 @@ Throttling prevents alert fatigue by suppressing duplicate alerts for the same s
 Severity is set to Medium because this activity is suspicious but requires further validation before escalation.
 
 ---
-
-## 7. Drill-Down Search
-
-[photo5]
-
-```spl
-sourcetype=fortigate_traffic srcip=$srcip$
-```
-
-The drill-down search enables analysts to pivot into raw logs for deeper investigation and dynamically filters based on the triggered `srcip`.
-
----
-
 ## 8. Field Enrichment
 
 [photo6]
