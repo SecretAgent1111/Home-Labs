@@ -124,7 +124,7 @@ Severity is set to Medium because this activity is suspicious but requires furth
 
 ## 7. Field Enrichment
 
-![photo](images/photo7.png)
+![photo](images/photo8.png)
 
 | Enrichment Type | Fields |
 |---|---|
