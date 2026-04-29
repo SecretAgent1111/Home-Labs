@@ -32,6 +32,8 @@ To detect potential scanning or brute-force behavior by identifying source IPs t
 
 ### SPL Query
 
+![photo](images/photo0.png)
+
 ```spl
 sourcetype=fortigate_traffic
 | stats count dc(dstip) as unique_targets by srcip
@@ -57,7 +59,7 @@ This step identifies how many unique systems each source is communicating with.
 
 ## 2. Detection Validation
 
-[photo1]
+![photo](images/photo1.png)
 
 Validation confirms that certain source IPs are communicating with an abnormally high number of unique destinations, which is not typical for standard user or server behavior.
 
@@ -65,7 +67,7 @@ Validation confirms that certain source IPs are communicating with an abnormally
 
 ## 3. Scheduling Configuration
 
-[photo2]
+![photo](images/photo3.png)
 
 | Setting | Value |
 |---|---|
@@ -80,6 +82,8 @@ Running this detection frequently ensures near real-time visibility into scannin
 
 ## 4. MITRE ATT&CK Mapping
 
+![photo](images/photo4.png)
+
 | Field | Value |
 |---|---|
 | Technique ID | T1046 |
@@ -91,7 +95,7 @@ This detection aligns with adversaries attempting to discover services and hosts
 
 ## 5. Trigger Conditions and Throttling
 
-[photo3]
+![photo](images/photo5.png)
 
 | Setting | Value |
 |---|---|
@@ -106,7 +110,7 @@ Throttling prevents alert fatigue by suppressing duplicate alerts for the same s
 
 ## 6. Notable Event Configuration
 
-[photo4]
+![photo](images/photo6.png)
 
 | Setting | Value |
 |---|---|
@@ -120,7 +124,7 @@ Severity is set to Medium because this activity is suspicious but requires furth
 
 ## 7. Field Enrichment
 
-[photo6]
+![photo](images/photo7.png)
 
 | Enrichment Type | Fields |
 |---|---|
@@ -132,6 +136,8 @@ Enrichment helps correlate IPs with users, systems, and roles, improving investi
 ---
 
 ## 8. Final Enabled Rule
+
+![photo](images/photo8.png)
 
 Confirming the rule is enabled ensures the detection is active and continuously monitoring for suspicious activity.
 
