@@ -137,7 +137,7 @@ Enrichment helps correlate IPs with users, systems, and roles, improving investi
 
 ## 8. Final Enabled Rule
 
-![photo](images/photo8.png)
+![photo](images/photo9.png)
 
 Confirming the rule is enabled ensures the detection is active and continuously monitoring for suspicious activity.
 
