@@ -193,23 +193,7 @@ When this alert is triggered, a SOC analyst should follow these steps:
 - Unauthorized login attempts
 - Misconfigured services generating authentication noise
 ---
- 
-## Potential Improvements
- 
-- Add source IP correlation to identify attack origin
-- Implement anomaly-based dynamic thresholds using baseline modeling
-- Integrate with a SOAR platform for automated response and ticket creation
----
- 
-## Key Learnings
- 
-- SPL query development and aggregation techniques
-- Windows Security Event Log analysis
-- Detection tuning and alert optimization
-- MITRE ATT&CK framework mapping
-- SOC alert lifecycle management
----
- 
+
 ## Conclusion
  
 This project demonstrates a practical approach to detection engineering by combining technical implementation with operational considerations including tuning, investigation workflows, and alert management. The resulting rule provides a reliable, low-noise mechanism for detecting Windows brute force login attempts within a Splunk Enterprise Security environment.
