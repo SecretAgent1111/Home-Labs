@@ -201,25 +201,6 @@ This detection may generate alerts in legitimate scenarios, including:
 
 ---
 
-## Potential Improvements
-
-- Add geo-location enrichment for external IPs
-- Correlate with IDS/IPS alerts
-- Integrate threat intelligence feeds
-- Add port-based analysis
-- Implement risk scoring
-
----
-
-## Key Learnings
-
-- Distinct count (`dc`) is powerful for anomaly detection
-- Threshold tuning is critical to reduce noise
-- Context enrichment significantly improves triage efficiency
-- Correlation searches should always include drill-down capabilities
-
----
-
 ## Conclusion
 
 This detection provides strong visibility into early-stage reconnaissance activity. By focusing on connection patterns rather than signatures, it enables detection of both known and unknown threats.
